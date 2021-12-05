@@ -1,0 +1,15 @@
+{
+	"name": "aoc-2021",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"dependencies": {
+		"@types/node": "^16.11.11",
+		"typescript": "^4.5.2"
+	},
+	"scripts": {
+		"start": "node dist",
+		"start:watch": "tsc -watch",
+		"compile": "tsc"
+	}
+}
