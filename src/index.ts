@@ -38,7 +38,7 @@ const SonarSweep = (filepath : string) : void => {
     }
 };
 
-SonarSweep('inputs/day-1.txt');
+// SonarSweep('inputs/day-1.txt');
 
 // --- Day 2: Dive! ---
 
@@ -95,4 +95,54 @@ const Dive = (filepath: string) : void => {
     }  
 };
 
-Dive('inputs/day-2.txt');
+// Dive('inputs/day-2.txt');
+
+// --- Day 3: Binary Diagnostic ---
+
+const Diagnostic = (filepath: string): void => {
+    try {
+        const data: string[][] = fs.readFileSync(filepath, 'utf8').replace(/\r/g, "").split(/\n/).map((val: string) => val.split(''));
+
+        // --- Part One ---
+        interface valArrayType {
+            one: number, zero: number
+        };
+
+        const valArr: valArrayType[] = [];
+        
+        for (let i = 0; i < data[0].length; i++) {
+            valArr.push({ one: 0, zero: 0 });
+        };
+
+        // you don't need to store both zero or one, just storing anyone one is suffice
+        data.forEach((bin: string[]) => {
+            bin.forEach((val: string, index: number) => {
+                val === '1' && (valArr[index].one += 1);
+                val === '0' && (valArr[index].zero += 1);
+            });
+        });
+
+        const gamma: string[] = [];
+        const epsilon : string[] = [];
+ 
+        valArr.forEach((obj: valArrayType) => {
+            if (obj.one > (data.length / 2)) {
+                gamma.push('1');
+                epsilon.push('0');
+            } else {
+                gamma.push('0');
+                epsilon.push('1');
+            }
+        });
+
+        const gammaRate = parseInt(gamma.join(''), 2);
+        const epsilonRate = parseInt(epsilon.join(''), 2);
+
+        console.log(`Multiplying the gamma rate (${gammaRate}) by the epsilon rate (${epsilonRate}) produces the power consumption, ${gammaRate * epsilonRate}`);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+Diagnostic('inputs/day-3.txt');
